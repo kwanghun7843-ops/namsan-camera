@@ -4,6 +4,9 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <meta name="theme-color" content="#101426">
+  <link rel="manifest" href="./manifest.webmanifest">
+  <meta name="description" content="남산중 예체능 따라잡기: 두 사람이 체조·축구·농구 동작을 맞추는 일심동체 챌린지">
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2064%2064%22%3E%3Crect%20width%3D%2264%22%20height%3D%2264%22%20rx%3D%2215%22%20fill%3D%22%23101426%22%2F%3E%3Ccircle%20cx%3D%2232%22%20cy%3D%2232%22%20r%3D%2224%22%20fill%3D%22none%22%20stroke%3D%22%23ffd36d%22%20stroke-width%3D%225%22%2F%3E%3Cpath%20d%3D%22M17%2036l11-11%208%208%2011-12%22%20fill%3D%22none%22%20stroke%3D%22%2370e6bc%22%20stroke-width%3D%226%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%2F%3E%3C%2Fsvg%3E">
   <title>남산중 예체능 따라잡기</title>
   <style>
     :root { color-scheme: dark; --bg:#0d1121; --panel:#19213a; --line:#354362; --text:#f5f7ff; --muted:#b7c3dd; --gold:#ffd36d; --mint:#70e6bc; --pink:#f597b2; }
@@ -82,6 +85,11 @@
     .camera .half.ok { border-color:var(--mint); box-shadow:inset 0 0 28px #70e6bc55; }
     .camera-empty { position:absolute; inset:0; display:grid; place-items:center; text-align:center; padding:20px; color:#d7e4f1; }
     .camera-empty .people { font-size:70px; line-height:1.3; }
+    .camera-gate { position:absolute; inset:0; z-index:4; display:flex; align-items:center; justify-content:center; padding:18px; text-align:center; background:#10182dba; backdrop-filter:blur(3px); }
+    .gate-card { width:min(440px,100%); padding:24px; border:1px solid #77dcbc99; border-radius:24px; background:#16263cdd; box-shadow:0 14px 45px #0008; }
+    .gate-count { color:var(--gold); font-size:clamp(45px,9vw,94px); font-weight:950; line-height:1.1; }
+    .gate-message { color:#f5f7ff; font-size:clamp(17px,2.5vw,23px); font-weight:800; line-height:1.5; margin:8px 0 0; }
+    .orientation-notice { position:fixed; bottom:14px; left:50%; transform:translateX(-50%); z-index:30; width:min(550px,calc(100% - 24px)); display:flex; align-items:center; justify-content:space-between; gap:12px; padding:12px 14px; border:1px solid var(--gold); border-radius:15px; background:#141f36f5; color:var(--text); box-shadow:0 12px 34px #0009; font-size:14px; }
     .role-list { display:flex; flex-direction:column; gap:12px; }
     .role { flex:1; border:1px solid #51617e; background:#1e2b45; border-radius:19px; padding:18px; display:flex; flex-direction:column; justify-content:center; }
     .role b { color:var(--gold); font-size:14px; }
@@ -132,8 +140,8 @@
 
       <section id="ready" class="screen" aria-label="체육 준비">
         <div class="ready-layout">
-          <div><div class="eyebrow">SPORTS MODE</div><h2>체육: 스포츠 명장면</h2><p class="lead">체조·축구·농구에서 각각 하나의 미션이 무작위로 나옵니다. 화면의 A와 B에 한 명씩 서서 역할을 완성하세요.</p><ol class="steps"><li>카메라에 두 사람의 전신이 들어오게 서세요.</li><li>각 미션의 A·B 동작을 동시에 완성하세요.</li><li>세 장면을 성공하면 일심동체 100%!</li></ol></div>
-          <div class="panel"><h3>시작 방법</h3><p>카메라 모드는 이 기기에서 자세를 감지합니다. 영상과 이름은 저장하지 않습니다.</p><div class="actions"><button class="btn mint" id="startCamera">📷 카메라로 시작</button><button class="btn alt" id="startDemo">현장 테스트 모드</button></div><p class="status" id="readyStatus" role="status">태블릿을 가로로 두고, 밝은 곳에서 시작하세요.</p><a class="btn alt small hidden" id="cameraFallback" target="_blank" rel="noopener noreferrer">카메라 게임 직접 열기 ↗</a><a class="btn alt small" id="readyBack" href="#select">← 과목 선택</a></div>
+          <div><div class="eyebrow">SPORTS MODE</div><h2>체육: 스포츠 명장면</h2><p class="lead">체조·축구·농구에서 각각 하나의 미션이 무작위로 나옵니다. 화면의 A와 B에 한 명씩 서서 역할을 완성하세요.</p><ol class="steps"><li>카메라에 두 사람의 전신이 들어오게 서세요.</li><li>두 사람이 확인되면 3, 2, 1, 시작! 이후 첫 미션이 공개됩니다.</li><li>각 미션의 A·B 동작을 함께 완성하세요.</li></ol></div>
+          <div class="panel"><h3>시작 방법</h3><p>카메라 모드는 이 기기에서 자세를 감지합니다. 영상과 이름은 저장하지 않습니다.</p><div class="actions"><button class="btn mint" id="startCamera">📷 카메라로 시작</button><button class="btn alt" id="startDemo">현장 테스트 모드</button></div><p class="status" id="readyStatus" role="status">태블릿을 가로로 두고, 밝은 곳에서 시작하세요.</p><a class="btn alt small" id="readyBack" href="#select">← 과목 선택</a></div>
         </div>
       </section>
 
@@ -142,7 +150,7 @@
         <div class="meter" aria-label="일심동체 게이지"><div class="meter-fill" id="meterFill"></div></div><div class="meter-label" id="meterLabel">일심동체 0%</div>
         <div class="mission"><div class="category" id="categoryText">체조</div><h2 id="missionTitle">균형 듀오</h2><p id="missionHint">두 사람이 각자의 자세를 맞춰주세요.</p></div>
         <div class="arena">
-          <div class="camera"><video id="cameraVideo" autoplay muted playsinline></video><div class="camera-empty" id="cameraEmpty"><div><div class="people">🙆‍♀️　🙆‍♂️</div><strong>현장 테스트 모드</strong><p>아래 A/B 버튼으로 미션 진행을 확인하세요.</p></div></div><div class="half left" id="zoneA">A 위치</div><div class="half right" id="zoneB">B 위치</div></div>
+          <div class="camera"><video id="cameraVideo" autoplay muted playsinline></video><div class="camera-empty" id="cameraEmpty"><div><div class="people">🙆‍♀️　🙆‍♂️</div><strong>현장 테스트 모드</strong><p>아래 A/B 버튼으로 미션 진행을 확인하세요.</p></div></div><div class="half left" id="zoneA">A 위치</div><div class="half right" id="zoneB">B 위치</div><div class="camera-gate hidden" id="cameraGate" aria-live="polite"><div class="gate-card"><div class="gate-count" id="gateCount">준비</div><p class="gate-message" id="gateMessage">두 사람의 전신이 화면에 들어오게 서세요.</p></div></div></div>
           <div class="role-list"><div class="role" id="roleA"><b>PLAYER A</b><strong id="roleAText">동작 안내</strong><span id="roleAState">대기 중</span></div><div class="role" id="roleB"><b>PLAYER B</b><strong id="roleBText">동작 안내</strong><span id="roleBState">대기 중</span></div></div>
         </div>
         <div class="hold"><div id="holdFill"></div></div>
@@ -153,15 +161,16 @@
         <div class="result"><div class="award" id="resultIcon">🏆</div><div class="eyebrow">SPORTS TEAM RESULT</div><h2 id="resultTitle">일심동체 달성!</h2><div class="score" id="resultScore">100%</div><p id="resultText">두 사람의 호흡으로 세 장면을 완성했습니다.</p><div class="summary" id="resultSummary"></div><div class="actions" style="justify-content:center"><button class="btn" id="retry">체육 다시 도전</button><button class="btn alt" id="goSubjects">과목 선택</button></div></div>
       </section>
     </main>
-    <footer>남산중학교 · 체육 모드 1차 시제품 · 촬영 영상과 결과는 서버로 전송하지 않습니다.</footer>
+    <footer>남산중학교 · 체육 모드 · 촬영 영상과 결과는 서버로 전송하지 않습니다.</footer>
   </div>
+  <div class="orientation-notice hidden" id="orientationNotice" role="status"><span>↻ 태블릿을 가로로 돌려 주세요. 화면 회전 잠금도 확인해 주세요.</span><button class="btn small" id="orientNow">가로 화면 시도</button></div>
   <div class="toast hidden" id="toast" role="status"></div>
   <script>
     // 게임 코드가 시작되지 않아도 첫 화면 전환은 위의 링크와 CSS로 작동합니다.
     window.addEventListener('error', function(event) {
       var box = document.getElementById('bootError');
       if (!box) return;
-      box.textContent = '앱 초기화 오류: ' + (event.message || '스크립트를 불러오지 못했습니다.') + (event.lineno ? ' (줄 ' + event.lineno + ')' : '') + ' · 새 버전 배포 상태를 확인해 주세요.';
+      box.textContent = '앱 초기화 오류: ' + (event.message || '스크립트를 불러오지 못했습니다.') + (event.lineno ? ' (줄 ' + event.lineno + ')' : '') + ' · 화면을 새로고침해 주세요.';
       box.classList.remove('hidden');
     });
   </script>
@@ -171,14 +180,14 @@
     // 실제 영상 URL을 사용할 때 아래 빈 문자열을 HTTPS MP4 주소로 바꿉니다.
     // Google Drive 공유 페이지 주소는 직접 재생 가능한 MP4 주소가 아닙니다.
     const INTRO_VIDEO_URL = '';
-    // 카메라 게임 HTML을 별도 HTTPS 주소에 올린 뒤 그 주소를 입력합니다.
-    // GAS HTML Service iframe에서는 카메라 권한을 요청할 수 없습니다.
-    const CAMERA_GAME_URL = '';
     const MEDIAPIPE_VERSION = '1.0.1';
     const VISION_MODULE_URL = 'https://cdn.jsdelivr.net/npm/@mediapipe/tasks-vision@' + MEDIAPIPE_VERSION + '/vision_bundle.mjs';
     const MODEL_URL = 'https://storage.googleapis.com/mediapipe-models/pose_landmarker/pose_landmarker_lite/float16/1/pose_landmarker_lite.task';
     const MISSION_SECONDS = 24;
     const HOLD_MS = 850;
+    const BODY_STABLE_MS = 900;
+    const COUNTDOWN_MS = 3000;
+    const START_FLASH_MS = 650;
 
     const $ = id => document.getElementById(id);
     const missions = {
@@ -195,11 +204,12 @@
         { id:'basketB', category:'농구', title:'리버스 패스 앤 슛', a:'두 팔을 위로 들어 슛!', b:'양손을 A 쪽으로 뻗어 패스!', hint:'역할을 바꿔 다시 한 장면을 완성해요.', check:(a,b)=>[armsUp(a),passTo(b,'left')] }
       ]
     };
-    const state = { screen:'intro', mode:null, missionList:[], round:0, successes:[], score:0, endAt:0, holdFrom:0, transition:false, token:0, ticker:null, stream:null, landmarker:null, cameraLoop:0, lastVideoTime:-1, demoUntil:[0,0], lastSeen:0 };
+    const state = { screen:'intro', mode:null, phase:null, gateSeenAt:null, countdownAt:null, missionList:[], round:0, successes:[], score:0, endAt:0, holdFrom:0, transition:false, token:0, ticker:null, stream:null, landmarker:null, cameraLoop:0, lastVideoTime:-1, demoUntil:[0,0], lastSeen:0 };
 
     // 카메라 미러링 후 화면상 좌/우 좌표를 사용합니다.
     function point(p,i) { return {x:1-p[i].x,y:p[i].y,v:p[i].visibility??1}; }
     function parts(p) { if(!p) return null; const ids=[11,12,15,16,23,24,27,28]; if(ids.some(i=>(p[i]?.visibility??1)<.35)) return null; return {s:[point(p,11),point(p,12)],w:[point(p,15),point(p,16)],h:[point(p,23),point(p,24)],an:[point(p,27),point(p,28)]}; }
+    function fullBodyParts(p) { const ids=[0,11,12,15,16,23,24,27,28]; if(!p||ids.some(i=>!p[i]||(p[i].visibility??1)<.5||p[i].x<.02||p[i].x>.98||p[i].y<.02||p[i].y>.98)) return null; return parts(p); }
     const avg=(x,y)=>(x+y)/2;
     function shoulderY(p) { return avg(p.s[0].y,p.s[1].y); }
     function shoulderX(p) { return avg(p.s[0].x,p.s[1].x); }
@@ -216,9 +226,17 @@
     function randomOne(items) { return items[Math.floor(Math.random()*items.length)]; }
     function makeMissions() { const list=[randomOne(missions.gym),randomOne(missions.soccer),randomOne(missions.basketball)]; for(let i=list.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1)); [list[i],list[j]]=[list[j],list[i]];} return list; }
     function statusReady(message,error=false) { $('readyStatus').textContent=message; $('readyStatus').classList.toggle('error',error); }
+    function isLandscape() { return window.innerWidth>=window.innerHeight; }
+    function updateOrientationNotice() { $('orientationNotice').classList.toggle('hidden',isLandscape()); }
+    async function requestLandscape(userAction=false) {
+      try {
+        if(userAction && !isLandscape() && !document.fullscreenElement && document.documentElement.requestFullscreen) await document.documentElement.requestFullscreen();
+        if(screen.orientation?.lock) await screen.orientation.lock('landscape');
+      } catch(e) { /* 브라우저나 기기 정책상 잠금 불가: 회전 안내를 표시합니다. */ }
+      updateOrientationNotice();
+    }
 
-    // GAS HTML 문서의 일반 스크립트에는 동적 import 구문을 넣지 않습니다.
-    // 사용자가 카메라 버튼을 눌렀을 때 별도 module 스크립트에서만 자세 인식 도구를 불러옵니다.
+    // 카메라 시작 시에만 자세 인식 도구를 불러옵니다.
     let visionLoading;
     function loadVisionModule() {
       if(window.__namsanVision) return Promise.resolve(window.__namsanVision);
@@ -239,19 +257,10 @@
     }
 
     async function startCamera() {
-      // GAS의 iframe 밖에 있는 독립 화면에서 카메라 게임을 실행합니다.
-      if(window.top!==window.self) {
-        if(!CAMERA_GAME_URL) {
-          statusReady('GAS 화면에서는 카메라 권한을 받을 수 없습니다. 동봉된 camera-site/index.html을 별도 HTTPS 주소에 게시한 뒤 CAMERA_GAME_URL에 그 주소를 넣어 주세요.',true);
-          return;
-        }
-        const opened=window.open(CAMERA_GAME_URL,'_blank');
-        if(!opened) statusReady('새 창이 차단되었습니다. 아래의 카메라 게임 직접 열기를 눌러 주세요.',true);
-        return;
-      }
       $('startCamera').disabled=true;
       statusReady('카메라 권한을 요청하고 있습니다…');
       try {
+        await requestLandscape(true);
         if(!window.isSecureContext) throw new Error('카메라 게임은 HTTPS 주소에서 열어야 합니다.');
         if(!navigator.mediaDevices?.getUserMedia) throw new Error('이 브라우저에서 카메라 기능을 사용할 수 없습니다.');
         state.stream=await navigator.mediaDevices.getUserMedia({audio:false,video:{facingMode:'user',width:{ideal:1280},height:{ideal:720}}});
@@ -261,7 +270,7 @@
         const lib=await loadVisionModule();
         const vision=await lib.FilesetResolver.forVisionTasks('https://cdn.jsdelivr.net/npm/@mediapipe/tasks-vision@'+MEDIAPIPE_VERSION+'/wasm');
         state.landmarker=await lib.PoseLandmarker.createFromOptions(vision,{baseOptions:{modelAssetPath:MODEL_URL,delegate:'CPU'},runningMode:'VIDEO',numPoses:2,minPoseDetectionConfidence:.5,minPosePresenceConfidence:.5,minTrackingConfidence:.45});
-        state.mode='camera'; beginGame();
+        state.mode='camera'; beginCameraGate();
         startCameraLoop(state.token);
       } catch(err) {
         stopCamera();
@@ -269,7 +278,40 @@
         statusReady(`${reason} 현장 테스트 모드로 화면과 미션 흐름을 확인할 수 있습니다.`,true);
       } finally { $('startCamera').disabled=false; }
     }
-    function stopCamera() { cancelAnimationFrame(state.cameraLoop); state.cameraLoop=0; if(state.stream) state.stream.getTracks().forEach(t=>t.stop()); state.stream=null; $('cameraVideo').srcObject=null; if(state.landmarker){ try{state.landmarker.close();}catch(e){} state.landmarker=null; } }
+    function stopCamera() { cancelAnimationFrame(state.cameraLoop); state.cameraLoop=0; state.phase=null; if(state.stream) state.stream.getTracks().forEach(t=>t.stop()); state.stream=null; $('cameraVideo').srcObject=null; if(state.landmarker){ try{state.landmarker.close();}catch(e){} state.landmarker=null; } }
+    function beginCameraGate() {
+      clearInterval(state.ticker); state.token++; state.phase='waiting'; state.gateSeenAt=null; state.countdownAt=null; state.lastVideoTime=-1;
+      $('cameraEmpty').classList.add('hidden'); $('demoControls').classList.remove('show'); $('cameraGate').classList.remove('hidden');
+      $('roundText').textContent='전신 인식 준비'; $('timerText').textContent='준비'; $('meterFill').style.width='0%'; $('meterLabel').textContent='일심동체 0%';
+      document.querySelector('.mission').classList.add('hidden');
+      $('roleAText').textContent='화면 왼쪽에 서기'; $('roleBText').textContent='화면 오른쪽에 서기';
+      setRoles(false,false,'전신 인식 대기'); $('holdFill').style.width='0%';
+      $('gateCount').textContent='준비'; $('gateMessage').textContent='두 사람의 머리부터 발끝까지 화면에 들어오게 서세요.';
+      $('gameStatus').textContent='두 사람의 전신을 확인하면 카운트다운이 시작됩니다.';
+      show('game'); updateOrientationNotice();
+    }
+    function advanceCameraGate(visibleCount) {
+      if(state.phase==='playing') return;
+      const now=performance.now();
+      if(!isLandscape() || visibleCount<2) {
+        state.phase='waiting'; state.gateSeenAt=null; state.countdownAt=null;
+        $('gateCount').textContent=isLandscape()?`${visibleCount} / 2`:'↻';
+        $('gateMessage').textContent=isLandscape()?'두 사람 모두 머리부터 발끝까지 보이게 서세요.':'태블릿을 가로로 돌리고 화면 회전 잠금을 해제해 주세요.';
+        return;
+      }
+      if(state.phase==='waiting') {
+        if(state.gateSeenAt===null) state.gateSeenAt=now;
+        $('gateCount').textContent='2 / 2';
+        $('gateMessage').textContent='두 사람의 전신이 보입니다. 잠깐 그대로 서세요!';
+        if(now-state.gateSeenAt>=BODY_STABLE_MS) { state.phase='countdown'; state.countdownAt=now; }
+      }
+      if(state.phase==='countdown') {
+        const elapsed=now-state.countdownAt;
+        $('gateCount').textContent=elapsed<COUNTDOWN_MS?String(3-Math.floor(elapsed/1000)):'시작!';
+        $('gateMessage').textContent=elapsed<COUNTDOWN_MS?'자세를 유지해 주세요.':'첫 미션을 공개합니다!';
+        if(elapsed>=COUNTDOWN_MS+START_FLASH_MS) beginGame(true);
+      }
+    }
     function startCameraLoop(token) {
       const video=$('cameraVideo');
       const loop=()=>{
@@ -278,20 +320,25 @@
           if(video.readyState>=2 && video.currentTime!==state.lastVideoTime) {
             state.lastVideoTime=video.currentTime;
             const result=state.landmarker.detectForVideo(video,performance.now());
-            const pair=(result.landmarks||[]).map(parts).filter(Boolean).sort((a,b)=>avg(a.h[0].x,a.h[1].x)-avg(b.h[0].x,b.h[1].x));
-            if(pair.length===2) { state.lastSeen=performance.now(); evaluate(pair[0],pair[1]); }
-            else evaluate(null,null);
+            const landmarks=result.landmarks||[];
+            if(state.phase!=='playing') advanceCameraGate(landmarks.map(fullBodyParts).filter(Boolean).length);
+            else {
+              const pair=landmarks.map(parts).filter(Boolean).sort((a,b)=>avg(a.h[0].x,a.h[1].x)-avg(b.h[0].x,b.h[1].x));
+              if(pair.length===2) { state.lastSeen=performance.now(); evaluate(pair[0],pair[1]); }
+              else evaluate(null,null);
+            }
           }
-        } catch(err) { $('gameStatus').textContent='자세 인식 오류: '+(err?.message||err); stopCamera(); return; }
+        } catch(err) { $('gameStatus').textContent='자세 인식 오류: '+(err?.message||err); $('gateCount').textContent='오류'; $('gateMessage').textContent='카메라 인식을 중단했습니다. 나가기를 눌러 다시 시도해 주세요.'; stopCamera(); return; }
         state.cameraLoop=requestAnimationFrame(loop);
       };
       state.cameraLoop=requestAnimationFrame(loop);
     }
 
-    function beginGame() {
-      clearInterval(state.ticker); state.token++;
+    function beginGame(keepCameraToken=false) {
+      clearInterval(state.ticker); if(!keepCameraToken) state.token++; state.phase='playing';
       state.missionList=makeMissions(); state.round=0; state.successes=[]; state.score=0; state.transition=false; state.lastVideoTime=-1; state.holdFrom=0;
       $('cameraEmpty').classList.toggle('hidden',state.mode==='camera'); $('demoControls').classList.toggle('show',state.mode==='demo');
+      $('cameraGate').classList.add('hidden'); document.querySelector('.mission').classList.remove('hidden');
       show('game'); renderMeter(); beginRound();
       state.ticker=setInterval(tick,100);
     }
@@ -310,7 +357,7 @@
       $('roleAState').textContent=a?'동작 확인!':waiting; $('roleBState').textContent=b?'동작 확인!':waiting;
     }
     function evaluate(a,b) {
-      if(state.screen!=='game'||state.transition) return;
+      if(state.screen!=='game'||state.phase!=='playing'||state.transition) return;
       const now=performance.now(); let okA=false,okB=false;
       if(state.mode==='demo') { okA=now<state.demoUntil[0]; okB=now<state.demoUntil[1]; }
       else if(a&&b) [okA,okB]=state.missionList[state.round].check(a,b);
@@ -326,7 +373,7 @@
       }
     }
     function tick() {
-      if(state.screen!=='game'||state.transition) return;
+      if(state.screen!=='game'||state.phase!=='playing'||state.transition) return;
       const seconds=Math.max(0,Math.ceil((state.endAt-performance.now())/1000));
       $('timerText').textContent=`${seconds}초`;
       if(state.mode==='demo') evaluate(null,null);
@@ -360,11 +407,19 @@
     $('demoA').onclick=()=>{state.demoUntil[0]=performance.now()+4000; evaluate(null,null);};
     $('demoB').onclick=()=>{state.demoUntil[1]=performance.now()+4000; evaluate(null,null);};
     $('quitGame').onclick=()=>leaveGame('select'); $('retry').onclick=()=>show('ready'); $('goSubjects').onclick=()=>show('select');
-    if(INTRO_VIDEO_URL) { const v=$('introVideo'); v.src=INTRO_VIDEO_URL; v.classList.remove('hidden'); $('introCore').classList.add('hidden'); $('introLabel').textContent='INTRO VIDEO'; v.play().catch(()=>{}); }
-    if(window.top!==window.self) {
-      $('startCamera').textContent='↗ 카메라 게임 열기';
-      if(CAMERA_GAME_URL) { $('cameraFallback').href=CAMERA_GAME_URL; $('cameraFallback').classList.remove('hidden'); }
+    $('orientNow').onclick=()=>requestLandscape(true);
+    window.addEventListener('resize',updateOrientationNotice);
+    window.addEventListener('orientationchange',updateOrientationNotice);
+    // 지원되는 브라우저에서 같은 화면 동작을 구조화된 도구로도 제공합니다.
+    if(document.modelContext?.registerTool) {
+      const register=tool=>{ try { Promise.resolve(document.modelContext.registerTool(tool)).catch(()=>{}); } catch(e){} };
+      const emptyInput={type:'object',properties:{},additionalProperties:false};
+      register({name:'open_sports_ready',title:'체육 미션 선택',description:'체육 미션의 준비 화면을 엽니다.',inputSchema:emptyInput,annotations:{readOnlyHint:false,untrustedContentHint:false},execute(input){ if(!input||typeof input!=='object'||Array.isArray(input)||Object.keys(input).length) throw new Error('입력은 빈 객체여야 합니다.'); statusReady('태블릿을 가로로 두고, 밝은 곳에서 시작하세요.'); show('ready'); return {screen:'ready',subject:'sports'}; }});
+      register({name:'start_sports_demo',title:'체육 현장 테스트 시작',description:'카메라 없이 체육 미션 세 라운드를 시험합니다.',inputSchema:emptyInput,annotations:{readOnlyHint:false,untrustedContentHint:false},execute(input){ if(!input||typeof input!=='object'||Array.isArray(input)||Object.keys(input).length) throw new Error('입력은 빈 객체여야 합니다.'); startDemo(); return {screen:'game',mode:'demo',round:1}; }});
     }
+    if(INTRO_VIDEO_URL) { const v=$('introVideo'); v.src=INTRO_VIDEO_URL; v.classList.remove('hidden'); $('introCore').classList.add('hidden'); $('introLabel').textContent='INTRO VIDEO'; v.play().catch(()=>{}); }
+    updateOrientationNotice();
+    void requestLandscape();
     const initialScreen=location.hash.slice(1);
     if(['intro','select','ready'].includes(initialScreen)) show(initialScreen);
     document.body.classList.add('js-ready');
